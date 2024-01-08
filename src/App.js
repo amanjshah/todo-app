@@ -1,4 +1,5 @@
 import './App.css';
+import DemoComponent from './components/DemoComponent';
 
 function App() {
   return (
@@ -7,12 +8,6 @@ function App() {
       <DemoComponent></DemoComponent>
     </div>
   );
-}
-
-function DemoComponent() {
-  return (
-    <div className='DemoComponent'>Demo Component</div>
-  )
 }
 
 export default App;
