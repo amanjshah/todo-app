@@ -5,14 +5,20 @@ const person = {
     street: 'Baker Street',
     city: 'London'
   },
-  profiles: ['LinkedIn', 'GitHub']
+  profiles: ['LinkedIn', 'GitHub'],
+  printProfile: () => {
+    person.profiles.map(
+      profile => console.log(profile)
+    )
+  }
 }
 
 export default function DemoComponent() {
   return (
     <>
-      <div className='DemoComponent'>{person.firstname}</div>
-      <div className='DemoComponent'>{person.address.city}</div>
+      <div>{person.firstname}</div>
+      <div>{person.address.city}</div>
+      <div>{ person.printProfile() }</div>
     </>
   )
 }
