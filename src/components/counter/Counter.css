@@ -1,5 +1,5 @@
 .count {
-    font-size: 150px;
+    font-size: 50px;
     padding: 20px;
 }
 
@@ -11,4 +11,9 @@
     padding: 15px;
     width: 100px;
     border-radius: 30px;
+}
+
+.totalCount {
+    color: red;
+    font-size: 150px;
 }
