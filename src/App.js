@@ -6,7 +6,8 @@ function App() {
   return (
     <div className="App">
       My Todo Application
-      <Counter />
+      <Counter increment={2}/>
+      <Counter increment={5}/>
     </div>
   );
 }
