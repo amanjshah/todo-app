@@ -14,12 +14,17 @@ export default function Counter() {
         setState(state - increment)
     }
 
+    function resetState() {
+        setState(0)
+    }
+
     return (
         <>
-            <span className='totalCount'>{state}</span>
             <CounterButton buttonIncrement={1} incrementMethod={incrementCounter} decrementMethod={decrementCounter}></CounterButton>
             <CounterButton buttonIncrement={2} incrementMethod={incrementCounter} decrementMethod={decrementCounter}></CounterButton>
             <CounterButton buttonIncrement={3} incrementMethod={incrementCounter} decrementMethod={decrementCounter}></CounterButton>
+            <span className='totalCount'>{state}</span>
+            <button className='resetButton' onClick={resetState}>Reset</button>
         </>
     )
 }
