@@ -3,21 +3,13 @@ import './Counter.css'
 
 export default function CounterButton({buttonIncrement, incrementMethod, decrementMethod}) {
     
-    function incrementCounter() {
-        incrementMethod(buttonIncrement)
-    }
-
-    function decrementCounter() {
-        decrementMethod(buttonIncrement)
-    }
-
     return (
         <div className = 'counter'>
             <div>
-                <button className='counterButton' onClick={incrementCounter}>
+                <button className='counterButton' onClick={() => incrementMethod(buttonIncrement)}>
                     +{buttonIncrement}
                 </button>
-                <button className='counterButton' onClick={decrementCounter}>
+                <button className='counterButton' onClick={() => decrementMethod(buttonIncrement)}>
                     -{buttonIncrement}
                 </button>
             </div>
