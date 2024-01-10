@@ -11,10 +11,24 @@ export default function TodoApp() {
 
 function LoginComponent() {
     const [username, setUsername] = useState('user')
-    const [password, setPassword] = useState('dummy')
+    const [password, setPassword] = useState('password')
+    const [authenticated, setAuthenticated] = useState(false)
+    const [authenticationAttempted, setAuthenticationAttempted] = useState(false)
+
+    function handleSubmit() {
+        setAuthenticationAttempted(true)
+        setAuthenticated(username === 'aman' && password === 'dummy')
+    }
+
+    function AuthenticationComponent() {
+        return authenticationAttempted && ((authenticated) ?
+            <div className='successfulAuthentication'>Successfully authenticated</div> :
+            <div className='unsuccessfulAuthentication'>Unsuccessful authentication</div>)
+    }
 
     return (
         <div className='Login'>
+            <AuthenticationComponent/>
             <div className='LoginForm'>
                 <div>
                     <label>Username: </label>
@@ -25,7 +39,7 @@ function LoginComponent() {
                     <input type='password' name='password' value={password} onChange={(event) => setPassword(event.target.value)}/>
                 </div>
                 <div>
-                    <button type='button' name='login'>Login</button>
+                    <button type='button' name='login' onClick={handleSubmit}>Login</button>
                 </div>
             </div>
         </div>
