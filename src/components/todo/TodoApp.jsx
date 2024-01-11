@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate, useParams } from 'react-router-dom'
 import './TodoApp.css'
-import { useNavigate } from 'react-router-dom'
 
 export default function TodoApp() {
     return (
@@ -10,7 +9,7 @@ export default function TodoApp() {
                 <Routes>
                     <Route path='/' element={<LoginComponent />}></Route>
                     <Route path='/login' element={<LoginComponent />}></Route>
-                    <Route path='/welcome' element={<WelcomeComponent />}></Route>
+                    <Route path='/welcome/:username' element={<WelcomeComponent />}></Route>
                     <Route path='*' element={<ErrorComponent />}></Route>
                 </Routes>
             </BrowserRouter>
@@ -28,21 +27,16 @@ function LoginComponent() {
     function handleSubmit() {
         if (username === 'aman' && password === 'dummy'){
             setAuthenticated(username === 'aman' && password === 'dummy')
-            navigate('/welcome')
+            // Use ticks (``) and ${variable} to put variable inside a string in JS
+            navigate(`/welcome/${username}`)
         }
         setAuthenticationAttempted(true)
-    }
-
-    function AuthenticationComponent() {
-        return authenticationAttempted && ((authenticated) ?
-            <div className='successfulAuthentication'>Successfully authenticated</div> :
-            <div className='unsuccessfulAuthentication'>Unsuccessful authentication</div>)
     }
 
     return (
         <div className='Login'>
             <h1>Login</h1>
-            <AuthenticationComponent/>
+            <AuthenticationComponent authenticated={authenticated} authenticationAttempted={authenticationAttempted}/>
             <div className='LoginForm'>
                 <div>
                     <label>Username: </label>
@@ -61,7 +55,7 @@ function LoginComponent() {
 }
 
 function WelcomeComponent() {
-    return <div className='Welcome'>Welcome</div>
+    return <div className='Welcome'>Welcome {useParams().username}</div>
 }
 
 function ErrorComponent() {
@@ -70,5 +64,11 @@ function ErrorComponent() {
             <h1>Page not found!</h1>
         </div>
     )
+}
+
+function AuthenticationComponent({authenticationAttempted, authenticated}) {
+    return authenticationAttempted && ((authenticated) ?
+      <div className='successfulAuthentication'>Successfully authenticated</div> :
+      <div className='unsuccessfulAuthentication'>Unsuccessful authentication</div>)
 }
 
