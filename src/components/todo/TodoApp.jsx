@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, useNavigate, useParams } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate, useParams, Link } from 'react-router-dom'
 import './TodoApp.css'
 
 export default function TodoApp() {
@@ -7,10 +7,11 @@ export default function TodoApp() {
         <div className='TodoApp'>
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<LoginComponent />}></Route>
-                    <Route path='/login' element={<LoginComponent />}></Route>
-                    <Route path='/welcome/:username' element={<WelcomeComponent />}></Route>
-                    <Route path='*' element={<ErrorComponent />}></Route>
+                    <Route path='/' element={<LoginComponent />} />
+                    <Route path='/login' element={<LoginComponent />} />
+                    <Route path='/welcome/:username' element={<WelcomeComponent />} />
+                    <Route path='/todos' element={<TodoListComponent />} />
+                    <Route path='*' element={<ErrorComponent />} />
                 </Routes>
             </BrowserRouter>
         </div>
@@ -55,7 +56,12 @@ function LoginComponent() {
 }
 
 function WelcomeComponent() {
-    return <div className='Welcome'>Welcome {useParams().username}</div>
+    return (
+      <div className='Welcome'>
+        <h1>Welcome {useParams().username}</h1>
+        <Link to='/todos'>Manage your to-do list</Link>
+      </div>
+    )
 }
 
 function ErrorComponent() {
@@ -70,5 +76,39 @@ function AuthenticationComponent({authenticationAttempted, authenticated}) {
     return authenticationAttempted && ((authenticated) ?
       <div className='successfulAuthentication'>Successfully authenticated</div> :
       <div className='unsuccessfulAuthentication'>Unsuccessful authentication</div>)
+}
+
+function TodoListComponent() {
+    const todos = [
+                                                {id: 1, description: 'Read UDS', done: false},
+                                                {id: 2, description: 'Learn AWS', done: false},
+                                                {id: 3, description: 'Learn DevOps', done: false},
+                                            ]
+    return (
+      <div className='TodoList'>
+          <h1>To-do list</h1>
+          <div>
+              <table>
+                  <thead>
+                      <tr>
+                          <td>ID</td>
+                          <td>Description</td>
+                          <td>Done</td>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {todos.map(
+                      item =>
+                        <tr>
+                          <td>{item.id}</td>
+                          <td>{item.description}</td>
+                          <td>{item.done.toString()}</td>
+                        </tr>
+                    )}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+    )
 }
 
