@@ -5,15 +5,18 @@ import './TodoApp.css'
 export default function TodoApp() {
     return (
         <div className='TodoApp'>
+            <HeaderComponent />
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<LoginComponent />} />
                     <Route path='/login' element={<LoginComponent />} />
                     <Route path='/welcome/:username' element={<WelcomeComponent />} />
                     <Route path='/todos' element={<TodoListComponent />} />
+                    <Route path='/logout' element={<LogoutComponent />} />
                     <Route path='*' element={<ErrorComponent />} />
                 </Routes>
             </BrowserRouter>
+          <FooterComponent />
         </div>
     )
 }
@@ -55,6 +58,14 @@ function LoginComponent() {
     )
 }
 
+function LogoutComponent() {
+    return (
+      <div className='Logout'>
+        <h1>Logged out</h1>
+      </div>
+    )
+}
+
 function WelcomeComponent() {
     return (
       <div className='Welcome'>
@@ -72,6 +83,22 @@ function ErrorComponent() {
     )
 }
 
+function HeaderComponent() {
+  return (
+    <div className='Header'>
+      Header <hr/>
+    </div>
+  )
+}
+
+function FooterComponent() {
+  return (
+    <div className='Footer'>
+      <hr/> Footer
+    </div>
+  )
+}
+
 function AuthenticationComponent({authenticationAttempted, authenticated}) {
     return authenticationAttempted && ((authenticated) ?
       <div className='successfulAuthentication'>Successfully authenticated</div> :
@@ -85,10 +112,10 @@ function TodoListComponent() {
                                                 {id: 3, description: 'Learn DevOps', done: false},
                                             ]
     return (
-      <div className='TodoList'>
+      <div className="container">
           <h1>To-do list</h1>
           <div>
-              <table>
+              <table className="table">
                   <thead>
                       <tr>
                           <td>ID</td>
