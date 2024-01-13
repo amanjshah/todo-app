@@ -1,17 +1,18 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import AuthenticationComponent from "./AuthenticationComponent";
+import {useAuth} from "./security/AuthContext";
 
 export default function LoginComponent() {
   const [username, setUsername] = useState('user')
   const [password, setPassword] = useState('password')
-  const [authenticated, setAuthenticated] = useState(false)
   const [authenticationAttempted, setAuthenticationAttempted] = useState(false)
   const navigate = useNavigate()
+  const authContext = useAuth()
 
   function handleSubmit() {
     if (username === 'aman' && password === 'dummy') {
-      setAuthenticated(username === 'aman' && password === 'dummy')
+      authContext.setAuthentication(true)
       // Use ticks (``) and ${variable} to put variable inside a string in JS
       navigate(`/welcome/${username}`)
     }
@@ -21,7 +22,7 @@ export default function LoginComponent() {
   return (
     <div className='Login'>
       <h1>Login</h1>
-      <AuthenticationComponent authenticated={authenticated} authenticationAttempted={authenticationAttempted}/>
+      <AuthenticationComponent authenticated={authContext.isAuthenticated} authenticationAttempted={authenticationAttempted}/>
       <div className='LoginForm'>
         <div>
           <label>Username: </label>
