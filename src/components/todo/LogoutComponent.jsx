@@ -1,9 +1,7 @@
 import {useAuth} from "./security/AuthContext";
 
 export default function LogoutComponent() {
-    const authContext = useAuth()
-    authContext.setAuthentication(false)
-    authContext.setAuthenticationAttempted(false)
+    useAuth().logout()
 
     return (
       <div className='Logout'>
