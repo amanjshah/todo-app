@@ -11,12 +11,21 @@ export default function AuthProvider({children}) {
 
     // Put some state in the Context
     const [isAuthenticated, setAuthentication] = useState(false)
+    const [authenticationAttempted, setAuthenticationAttempted] = useState(false)
     const [number, setNumber] = useState(0)
     setInterval(() => setNumber(number + 1), 10000)
-    const contextValue = {isAuthenticated, setAuthentication, number}
+
+    function login(username, password) {
+        if (username === 'aman' && password === 'dummy') {
+            setAuthentication(true)
+            return true
+        }
+        setAuthenticationAttempted(true)
+        return false
+    }
 
     return (
-        <AuthContext.Provider value={contextValue}>
+        <AuthContext.Provider value={{isAuthenticated, setAuthentication, authenticationAttempted, setAuthenticationAttempted, number, login}}>
             {children}
         </AuthContext.Provider>
     )
