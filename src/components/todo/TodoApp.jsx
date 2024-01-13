@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import './TodoApp.css'
 import LogoutComponent from './LogoutComponent'
 import HeaderComponent from "./HeaderComponent";
@@ -7,7 +7,11 @@ import ErrorComponent from "./ErrorComponent";
 import WelcomeComponent from "./WelcomeComponent";
 import TodoListComponent from "./TodoListComponent";
 import LoginComponent from "./LoginComponent";
-import AuthProvider from "./security/AuthContext";
+import AuthProvider, {useAuth} from "./security/AuthContext";
+
+function ProtectedRoute ({children}) {
+    return useAuth().isAuthenticated ? children : <Navigate to='/' />
+}
 
 export default function TodoApp() {
     return (
@@ -18,9 +22,15 @@ export default function TodoApp() {
                         <Routes>
                             <Route path='/' element={<LoginComponent />} />
                             <Route path='/login' element={<LoginComponent />} />
-                            <Route path='/welcome/:username' element={<WelcomeComponent />} />
-                            <Route path='/todos' element={<TodoListComponent />} />
-                            <Route path='/logout' element={<LogoutComponent />} />
+                            <Route path='/welcome/:username' element={
+                                <ProtectedRoute><WelcomeComponent /></ProtectedRoute>
+                            } />
+                            <Route path='/todos' element={
+                                <ProtectedRoute><TodoListComponent /></ProtectedRoute>
+                            } />
+                            <Route path='/logout' element={
+                                <ProtectedRoute><LogoutComponent /></ProtectedRoute>
+                            } />
                             <Route path='*' element={<ErrorComponent />} />
                         </Routes>
                     <FooterComponent />
