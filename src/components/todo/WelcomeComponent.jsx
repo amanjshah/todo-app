@@ -1,13 +1,13 @@
 import {Link, useParams} from "react-router-dom"
-import axios from "axios"
 import {useState} from "react";
+import {dataFromDummyEndpoint} from "./api/DummyApiService";
 
 export default function WelcomeComponent() {
   const [message, setMessage] = useState(null)
 
   function callApi() {
     console.log("called")
-    axios.get("http://localhost:8080/hello-world-bean")
+    dataFromDummyEndpoint
       .then((response) => successfulResponse(response))
       .catch((error) => errorResponse(error))
       .finally(() => console.log("clean up"))
