@@ -7,7 +7,7 @@ export default function WelcomeComponent() {
 
   function callApi() {
     console.log("called")
-    dataFromDummyEndpoint
+    dataFromDummyEndpoint("aman")
       .then((response) => successfulResponse(response))
       .catch((error) => errorResponse(error))
       .finally(() => console.log("clean up"))
