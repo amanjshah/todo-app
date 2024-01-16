@@ -1,10 +1,18 @@
+import {useEffect, useState} from "react";
+import {getTodoListForUser} from "./api/TodoApiService";
+
 export default function TodoListComponent() {
-  const todos =
-    [
-      {id: 1, description: 'Read UDS', done: false},
-      {id: 2, description: 'Learn AWS', done: false},
-      {id: 3, description: 'Learn DevOps', done: false},
-    ]
+
+  const [todos, setTodos] = useState([])
+
+  useEffect(() => getTodoList(), []);
+
+  function getTodoList() {
+      getTodoListForUser("aman")
+        .then((response) => {setTodos(response.data)})
+        .catch((error) => console.log(error))
+  }
+
   return (
     <div className="container">
       <h1>To-do list</h1>
@@ -15,6 +23,7 @@ export default function TodoListComponent() {
             <td>ID</td>
             <td>Description</td>
             <td>Done</td>
+            <td>Target Date</td>
           </tr>
           </thead>
           <tbody>
@@ -24,6 +33,7 @@ export default function TodoListComponent() {
                 <td>{item.id}</td>
                 <td>{item.description}</td>
                 <td>{item.done.toString()}</td>
+                <td>{item.targetDate.toString()}</td>
               </tr>
           )}
           </tbody>
