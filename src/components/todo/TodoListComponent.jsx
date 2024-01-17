@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
-import {getTodoListForUser} from "./api/TodoApiService";
+import {deleteTodo, getTodoListForUser} from "./api/TodoApiService";
 
 export default function TodoListComponent() {
 
   const [todos, setTodos] = useState([])
+  const [message, setMessage] = useState(null)
 
   useEffect(() => getTodoList(), []);
 
@@ -13,27 +14,36 @@ export default function TodoListComponent() {
         .catch((error) => console.log(error))
   }
 
+  function deleteTodoItem(id) {
+      deleteTodo('aman', id)
+        .then(() => {
+          setMessage(`Delete of to-do item ${id} successful`)
+          getTodoList()
+        })
+  }
+
   return (
     <div className="container">
       <h1>To-do list</h1>
+      {message && <div className='alert alert-warning'>{message}</div>}
       <div>
         <table className="table">
           <thead>
           <tr>
-            <td>ID</td>
-            <td>Description</td>
-            <td>Done</td>
-            <td>Target Date</td>
+            <th>Description</th>
+            <th>Done</th>
+            <th>Target Date</th>
+            <th>Delete</th>
           </tr>
           </thead>
           <tbody>
           {todos.map(
             item =>
-              <tr>
-                <td>{item.id}</td>
+              <tr key={item.id}>
                 <td>{item.description}</td>
                 <td>{item.done.toString()}</td>
                 <td>{item.targetDate.toString()}</td>
+                <td><button className='btn btn-warning' onClick={() => deleteTodoItem(item.id)}>Delete</button></td>
               </tr>
           )}
           </tbody>
