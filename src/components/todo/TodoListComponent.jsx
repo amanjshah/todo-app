@@ -1,21 +1,23 @@
 import {useEffect, useState} from "react";
 import {deleteTodo, getTodoListForUser} from "./api/TodoApiService";
+import {useAuth} from "./security/AuthContext";
 
 export default function TodoListComponent() {
 
   const [todos, setTodos] = useState([])
   const [message, setMessage] = useState(null)
+  const authContext = useAuth()
 
   useEffect(() => getTodoList(), []);
 
   function getTodoList() {
-      getTodoListForUser("aman")
+      getTodoListForUser(authContext.username)
         .then((response) => {setTodos(response.data)})
         .catch((error) => console.log(error))
   }
 
   function deleteTodoItem(id) {
-      deleteTodo('aman', id)
+      deleteTodo(authContext.username, id)
         .then(() => {
           setMessage(`Delete of to-do item ${id} successful`)
           getTodoList()
