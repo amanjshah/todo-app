@@ -14,7 +14,10 @@ export default function TodoListComponent() {
 
   function getTodoList() {
       getTodoListForUser(authContext.username)
-        .then((response) => {setTodos(response.data)})
+        .then((response) => {
+          console.log(response.data)
+          setTodos(response.data)
+        })
         .catch((error) => console.log(error))
   }
 
@@ -50,7 +53,7 @@ export default function TodoListComponent() {
             item =>
               <tr key={item.id}>
                 <td>{item.description}</td>
-                <td>{item.done.toString()}</td>
+                <td>{item.isDone.toString()}</td>
                 <td>{item.targetDate.toString()}</td>
                 <td><button className='btn btn-warning' onClick={() => deleteTodoItem(item.id)}>Delete</button></td>
                 <td><button className='btn btn-success' onClick={() => updateTodoItem(item.id)}>Update</button></td>
