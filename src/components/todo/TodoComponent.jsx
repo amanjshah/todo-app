@@ -1,5 +1,5 @@
-import {useParams} from "react-router-dom";
-import {getTodo} from "./api/TodoApiService";
+import {useNavigate, useParams} from "react-router-dom";
+import {getTodo, updateTodo} from "./api/TodoApiService";
 import {useEffect, useState} from "react";
 import {useAuth} from "./security/AuthContext";
 import {ErrorMessage, Field, Form, Formik} from "formik";
@@ -8,15 +8,18 @@ export default function TodoComponent() {
   const {id} = useParams()
   const [description, setDescription] = useState('')
   const [targetDate, setTargetDate] = useState('')
-  const authContext = useAuth()
+  const [isDone, setIsDone] = useState(false);
+  const username = useAuth().username
+  const navigate = useNavigate()
 
   useEffect(() => getTodoItem(), [id]);
 
   function getTodoItem() {
-    getTodo(authContext.username, id)
+    getTodo(username, id)
       .then((response) => {
         setDescription(response.data.description)
         setTargetDate(response.data.targetDate)
+        setIsDone(response.data.isDone)
       })
   }
 
@@ -29,12 +32,24 @@ export default function TodoComponent() {
     return errors
   }
 
+  function updateTodoItem(userInput) {
+    const todo = {
+      id: id,
+      username: username,
+      description: userInput.description,
+      targetDate: userInput.targetDate,
+      isDone: isDone
+    }
+    updateTodo(username, id, todo).catch(error => console.log(error))
+    navigate('/todos')
+  }
+
   return (
     <div className='container'>
       <h1>Enter to-do item details</h1>
         <Formik initialValues={{description, targetDate}}
                 enableReinitialize={true}
-                onSubmit={(userInput) => console.log(userInput)}
+                onSubmit={updateTodoItem}
                 validate={validate}
                 validateOnChange={false}
                 validateOnBlur={false}
