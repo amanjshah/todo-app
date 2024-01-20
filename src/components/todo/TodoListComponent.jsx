@@ -29,6 +29,10 @@ export default function TodoListComponent() {
         })
   }
 
+  function addTodoItem() {
+    navigate('/todo/-1')
+  }
+
   function updateTodoItem(id) {
     navigate(`/todo/${id}`)
   }
@@ -62,6 +66,7 @@ export default function TodoListComponent() {
           </tbody>
         </table>
       </div>
+      <button className='btn btn-success m-5' onClick={addTodoItem}>Add new item</button>
     </div>
   )
 }
