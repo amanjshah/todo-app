@@ -15,11 +15,13 @@ export default function TodoComponent() {
   useEffect(() => getTodoItem(), [id]);
 
   function getTodoItem() {
-    getTodo(username, id)
-      .then((response) => {
-        setDescription(response.data.description)
-        setTargetDate(response.data.targetDate)
-      })
+    if (id != -1) {
+      getTodo(username, id)
+        .then((response) => {
+          setDescription(response.data.description)
+          setTargetDate(response.data.targetDate)
+        })
+    }
   }
 
   function validate(userInput) {
