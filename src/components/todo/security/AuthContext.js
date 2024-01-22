@@ -15,34 +15,42 @@ export default function AuthProvider({children}) {
     const [authenticationAttempted, setAuthenticationAttempted] = useState(false)
     const [username, setUsername] = useState(null)
     const [number, setNumber] = useState(0)
+    const [token, setToken] = useState()
+
     setInterval(() => setNumber(number + 1), 10000)
 
     async function login(username, password) {
+        setAuthenticationAttempted(true)
         const basicAuthToken = 'Basic ' + window.btoa(username + ":" + password)
         try {
             const response = await executeBasicAuthDummyEndpoint(basicAuthToken)
             if (response.status == 200) {
                 setAuthentication(true)
                 setUsername(username)
+                setToken(basicAuthToken)
                 return true
             }
-            setAuthenticationAttempted(true)
-            setUsername(null)
-            return false
+            return failLoginAttempt()
         } catch (error) {
-            setAuthenticationAttempted(true)
-            setUsername(null)
-            return false
+            return failLoginAttempt()
         }
     }
 
     function logout() {
         setAuthentication(false)
         setAuthenticationAttempted(false)
+        setToken(null)
+        setUsername(null)
+    }
+
+    function failLoginAttempt() {
+        logout()
+        setAuthenticationAttempted(true)
+        return false
     }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, authenticationAttempted, login, logout, username}}>
+        <AuthContext.Provider value={{isAuthenticated, authenticationAttempted, login, logout, username, token}}>
             {children}
         </AuthContext.Provider>
     )
