@@ -6,3 +6,10 @@ export const dataFromDummyEndpoint =
       Authorization: 'Basic YW1hbjpkdW1teQ=='
     }
   });
+
+export const executeBasicAuthDummyEndpoint =
+  (token) => api.get(`/dummy`, {
+    headers: {
+      Authorization: token
+    }
+  });

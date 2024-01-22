@@ -1,4 +1,5 @@
 import {createContext, useContext, useState} from "react";
+import {executeBasicAuthDummyEndpoint} from "../api/DummyApiService";
 
 // Create a Context
 const AuthContext= createContext()
@@ -16,15 +17,23 @@ export default function AuthProvider({children}) {
     const [number, setNumber] = useState(0)
     setInterval(() => setNumber(number + 1), 10000)
 
-    function login(username, password) {
-        if (username === 'aman' && password === 'dummy') {
-            setAuthentication(true)
-            setUsername(username)
-            return true
+    async function login(username, password) {
+        const basicAuthToken = 'Basic ' + window.btoa(username + ":" + password)
+        try {
+            const response = await executeBasicAuthDummyEndpoint(basicAuthToken)
+            if (response.status == 200) {
+                setAuthentication(true)
+                setUsername(username)
+                return true
+            }
+            setAuthenticationAttempted(true)
+            setUsername(null)
+            return false
+        } catch (error) {
+            setAuthenticationAttempted(true)
+            setUsername(null)
+            return false
         }
-        setAuthenticationAttempted(true)
-        setUsername(null)
-        return false
     }
 
     function logout() {
