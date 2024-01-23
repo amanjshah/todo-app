@@ -1,5 +1,6 @@
 import {createContext, useContext, useState} from "react";
 import {executeBasicAuthDummyEndpoint} from "../api/DummyApiService";
+import {api} from "../api/ApiClient"
 
 // Create a Context
 const AuthContext= createContext()
@@ -28,6 +29,12 @@ export default function AuthProvider({children}) {
                 setAuthentication(true)
                 setUsername(username)
                 setToken(basicAuthToken)
+                api.interceptors.request.use(
+                  (config) => {
+                      config.headers.Authorization = basicAuthToken
+                      return config
+                  }
+                )
                 return true
             }
             return failLoginAttempt()
