@@ -1,13 +1,16 @@
 import {Link, useParams} from "react-router-dom"
 import {useState} from "react";
 import {dataFromDummyEndpoint} from "./api/DummyApiService";
+import {useAuth} from "./security/AuthContext";
 
 export default function WelcomeComponent() {
+
   const [message, setMessage] = useState(null)
+  const authContext = useAuth()
 
   function callApi() {
     console.log("called")
-    dataFromDummyEndpoint("aman")
+    dataFromDummyEndpoint("aman", authContext.token)
       .then((response) => successfulResponse(response))
       .catch((error) => errorResponse(error))
       .finally(() => console.log("clean up"))

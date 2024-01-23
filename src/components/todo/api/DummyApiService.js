@@ -1,9 +1,9 @@
 import {api} from "./ApiClient";
 
 export const dataFromDummyEndpoint =
-  (username) => api.get(`/hello-world/path-variable/${username}`, {
+  (username, token) => api.get(`/hello-world/path-variable/${username}`, {
     headers: {
-      Authorization: 'Basic YW1hbjpkdW1teQ=='
+      Authorization: token
     }
   });
 
