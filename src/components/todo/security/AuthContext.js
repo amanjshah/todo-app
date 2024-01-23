@@ -21,7 +21,6 @@ export default function AuthProvider({children}) {
     setInterval(() => setNumber(number + 1), 10000)
 
     async function login(username, password) {
-        setAuthenticationAttempted(true)
         const basicAuthToken = 'Basic ' + window.btoa(username + ":" + password)
         try {
             const response = await executeBasicAuthDummyEndpoint(basicAuthToken)
@@ -29,6 +28,7 @@ export default function AuthProvider({children}) {
                 setAuthentication(true)
                 setUsername(username)
                 setToken(basicAuthToken)
+                setAuthenticationAttempted(true)
                 api.interceptors.request.use(
                   (config) => {
                       config.headers.Authorization = basicAuthToken

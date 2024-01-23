@@ -1,5 +1,6 @@
 import {useAuth} from "./security/AuthContext";
 
 export default function LogoutComponent() {
-    useAuth().logout()
+    const authContext = useAuth()
+    authContext.logout()
 }
