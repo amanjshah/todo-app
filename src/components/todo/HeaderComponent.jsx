@@ -2,8 +2,8 @@ import {Link} from "react-router-dom";
 import {useAuth} from "./security/AuthContext";
 
 export default function HeaderComponent() {
-
-  const isAuthenticated = useAuth().isAuthenticated
+  const authContext = useAuth()
+  const isAuthenticated = authContext.isAuthenticated
 
   return (
     <header className="border-bottom border-light border-5 mb-5 p-2">
@@ -22,7 +22,7 @@ export default function HeaderComponent() {
             {!isAuthenticated && <Link className="nav-link" to="/login">Login</Link>}
           </li>
           <li className="nav-item fs-5">
-            {isAuthenticated && <Link className="nav-link" to="/logout">Logout</Link>}
+            {isAuthenticated && <Link className="nav-link" to="/login" onClick={authContext.logout}>Logout</Link>}
           </li>
         </ul>
       </div>
