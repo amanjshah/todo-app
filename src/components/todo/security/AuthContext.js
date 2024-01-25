@@ -1,6 +1,6 @@
 import {createContext, useContext, useState} from "react";
 import {api} from "../api/ApiClient"
-import {executeBasicAuthDummyEndpoint} from "../api/AuthenticationApiService";
+import {executeJwtAuthenticationService} from "../api/AuthenticationApiService";
 
 // Create a Context
 const AuthContext= createContext()
@@ -21,17 +21,17 @@ export default function AuthProvider({children}) {
     setInterval(() => setNumber(number + 1), 10000)
 
     async function login(username, password) {
-        const basicAuthToken = 'Basic ' + window.btoa(username + ":" + password)
         try {
-            const response = await executeBasicAuthDummyEndpoint(basicAuthToken)
+            const response = await executeJwtAuthenticationService(username, password)
             if (response.status == 200) {
+                const jwtToken = 'Bearer ' + response.data.token
                 setAuthentication(true)
                 setUsername(username)
-                setToken(basicAuthToken)
+                setToken(jwtToken)
                 setAuthenticationAttempted(true)
                 api.interceptors.request.use(
                   (config) => {
-                      config.headers.Authorization = basicAuthToken
+                      config.headers.Authorization = jwtToken
                       return config
                   }
                 )
