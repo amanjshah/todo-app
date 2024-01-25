@@ -1,6 +1,6 @@
 import {createContext, useContext, useState} from "react";
-import {executeBasicAuthDummyEndpoint} from "../api/DummyApiService";
 import {api} from "../api/ApiClient"
+import {executeBasicAuthDummyEndpoint} from "../api/AuthenticationApiService";
 
 // Create a Context
 const AuthContext= createContext()
