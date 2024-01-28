@@ -1,7 +1,6 @@
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import './TodoApp.css'
 import HeaderComponent from "./HeaderComponent";
-import FooterComponent from "./FooterComponent";
 import ErrorComponent from "./ErrorComponent";
 import WelcomeComponent from "./WelcomeComponent";
 import TodoListComponent from "./TodoListComponent";
@@ -34,7 +33,6 @@ export default function TodoApp() {
                             } />
                             <Route path='*' element={<ErrorComponent />} />
                         </Routes>
-                    <FooterComponent />
                 </BrowserRouter>
             </AuthProvider>
         </div>
