@@ -10,7 +10,7 @@ export default function TodoListComponent() {
   const authContext = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => getTodoList(), []);
+  useEffect(() => getTodoList(), [todos]);
 
   function getTodoList() {
       getTodoListForUser(authContext.username)
