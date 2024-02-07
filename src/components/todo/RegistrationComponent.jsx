@@ -1,1 +1,3 @@
-export default function RegistrationComponent() {}
+export default function RegistrationComponent() {
+  //this is empty
+}
