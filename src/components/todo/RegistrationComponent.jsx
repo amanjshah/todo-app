@@ -1,9 +1,18 @@
 import {useState} from "react";
+import {executeUserRegistrationService} from "./api/AuthenticationApiService";
+import {useNavigate} from "react-router-dom";
 
 export default function RegistrationComponent() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
+  async function handleSubmit() {
+    await executeUserRegistrationService(username, password)
+      .then(() => navigate('/login'))
+      .catch(error => console.log(error))
+  }
 
   return (
     <div className='Registation'>
@@ -20,7 +29,7 @@ export default function RegistrationComponent() {
                  onChange={(event) => setPassword(event.target.value)}/>
         </div>
         <div>
-          <button type='button' name='register'>Register</button>
+          <button type='button' name='register' onClick={handleSubmit}>Register</button>
         </div>
       </div>
     </div>
