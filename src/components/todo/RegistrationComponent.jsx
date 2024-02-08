@@ -1,6 +1,6 @@
 import {useState} from "react";
-import {executeUserRegistrationService} from "./api/AuthenticationApiService";
 import {useNavigate} from "react-router-dom";
+import {executeUserRegistrationService} from "./api/UserApiService";
 
 export default function RegistrationComponent() {
 
