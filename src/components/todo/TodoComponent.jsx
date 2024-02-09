@@ -39,12 +39,15 @@ export default function TodoComponent() {
       username: username,
       description: userInput.description,
       targetDate: userInput.targetDate,
-      isDone: false
+      isDone: userInput.isDone
     }
     if (id == -1) {
       addTodo(username, todo).catch(error => console.log(error))
     }
     else {
+      if (todo.isDone) {
+        console.log("done")
+      }
       updateTodo(username, id, todo).catch(error => console.log(error))
     }
     navigate('/todos')
@@ -78,6 +81,10 @@ export default function TodoComponent() {
                 <fieldset className='form-group'>
                   <label>Target Date</label>
                   <Field type='date' className='form-control' name='targetDate'/>
+                </fieldset>
+                <fieldset className='form-group'>
+                  <label>Completed? </label>
+                  <Field type='checkbox' className='form-control' name='isDone'/>
                 </fieldset>
                 <button className='btn btn-success m-5' type="submit">Save</button>
               </Form>
