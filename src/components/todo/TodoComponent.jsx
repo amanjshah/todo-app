@@ -45,9 +45,6 @@ export default function TodoComponent() {
       addTodo(username, todo).catch(error => console.log(error))
     }
     else {
-      if (todo.isDone) {
-        console.log("done")
-      }
       updateTodo(username, id, todo).catch(error => console.log(error))
     }
     navigate('/todos')
