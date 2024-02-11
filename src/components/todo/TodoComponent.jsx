@@ -9,6 +9,7 @@ export default function TodoComponent() {
   const {id} = useParams()
   const [description, setDescription] = useState('')
   const [targetDate, setTargetDate] = useState('')
+  const [isDone, setIsDone] = useState(false)
   const username = useAuth().username
   const navigate = useNavigate()
 
@@ -20,6 +21,7 @@ export default function TodoComponent() {
         .then((response) => {
           setDescription(response.data.description)
           setTargetDate(response.data.targetDate)
+          setIsDone(response.data.isDone)
         })
     }
   }
@@ -53,7 +55,7 @@ export default function TodoComponent() {
   return (
     <div className='container'>
       <h1>Enter to-do item details</h1>
-        <Formik initialValues={{description, targetDate}}
+        <Formik initialValues={{description, targetDate, isDone}}
                 enableReinitialize={true}
                 onSubmit={submitTodo}
                 validate={validate}
